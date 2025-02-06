@@ -1,126 +1,381 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>โปรเจควาเลนไทน์</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lobby Page</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
-      text-align: center;
-      overflow: hidden;
-      height: 100vh;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ff6a00, #ee0979);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
       margin: 0;
-    }
-
-    .container {
+      flex-direction: column;
+      text-align: center;
       position: relative;
-      height: 100%;
+      overflow: hidden;
     }
 
-    .mailbox {
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translateX(-50%);
+    h1 {
+      color: #fff;
+      font-size: 3em;
+      font-weight: 600;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    p {
+      color: #fff;
+      font-size: 1.2em;
+    }
+
+    .button-container button {
+      font-size: 1.4em;
+      padding: 15px 30px;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #ff3c00, #ff6b00);
+      color: #fff;
+      font-weight: bold;
       cursor: pointer;
-      animation: float 5s ease-in-out infinite;
+      margin: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .button-container button:hover {
+      background: linear-gradient(135deg, #ff6b00, #ff3c00);
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Styling for the time display text */
+    #time-display {
+      font-size: 2em;
+      color: #fff;
+      font-family: 'Courier New', Courier, monospace;
+      margin-top: 20px;
+    }
+
+    /* Positioning the back button in the time page and game pages */
+    .back-button {
+      background: #ff7597;
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 50px;
+      border: none;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .back-button:hover {
+      background: #ff91a4;
+    }
+
+    /* Styling for the images */
+    #us-images img {
+      margin-top: 20px;
+      width: 150px;
+      height: auto;
+      border: 5px solid #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Floating hearts and stars animation */
+    .floating {
+      position: absolute;
+      animation: float 10s infinite;
+      pointer-events: none;
+    }
+
+    /* ปรับแต่งหัวใจให้ดูสมจริงและมีเงา */
+    .heart {
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle at 50% 50%, #ff4b5c, #c0392b);
+      clip-path: polygon(50% 0%, 0% 40%, 50% 100%, 100% 40%);
+      animation-duration: 10s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0.9;
+      filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.6));
+    }
+
+    /* ปรับแต่งดาวให้ดูสมจริงและมีเงา */
+    .star {
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle at 50% 50%, #f1c40f, #f39c12);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      animation-duration: 12s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0.95;
+      filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.6));
     }
 
     @keyframes float {
       0% {
-        transform: translate(-50%, 0);
-      }
-      50% {
-        transform: translate(-50%, -20px);
-      }
-      100% {
-        transform: translate(-50%, 0);
-      }
-    }
-
-    .letter {
-      display: none;
-      margin-top: 20px;
-      background: #fff;
-      border: 1px solid #ccc;
-      padding: 20px;
-      width: 200px;
-      margin: 0 auto;
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translateX(-50%);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .hearts {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      pointer-events: none;
-    }
-
-    .heart {
-      position: absolute;
-      bottom: 0;
-      font-size: 24px;
-      color: red;
-      animation: heartAnimation 4s ease-in-out infinite;
-    }
-
-    @keyframes heartAnimation {
-      0% {
-        transform: translateY(0) scale(1);
+        transform: translateY(0) rotate(0deg) scale(0.8);
         opacity: 1;
       }
+      50% {
+        transform: translateY(-100vh) rotate(360deg) scale(1.2);
+        opacity: 0.5;
+      }
       100% {
-        transform: translateY(-100px) scale(1.5);
+        transform: translateY(0) rotate(720deg) scale(0.8);
+        opacity: 1;
+      }
+    }
+
+    /* ==================== Styling สำหรับหน้าเกม 1 (ทายเลข1-100) ==================== */
+    #game1 {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      max-width: 90%;
+      width: 400px;
+      margin: 20px;
+    }
+
+    #game1 h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #ffedcc;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    #game1 p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    #game1 input[type="number"] {
+      font-size: 1.2em;
+      padding: 10px;
+      width: 80%;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* เปลี่ยนสีปุ่มในเกมเป็นชมพูแดง */
+    #game1 button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ff3366, #ff5e7d);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #game1 button:hover {
+      background: linear-gradient(135deg, #ff5e7d, #ff3366);
+      transform: scale(1.05);
+    }
+
+    #game1 #feedback {
+      font-size: 1.1em;
+      margin-top: 15px;
+      color: #fff;
+      min-height: 1.5em;
+    }
+
+    /* ==================== เอฟเฟคแสดงความยินดี ==================== */
+    .congrats {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      font-size: 4em;
+      color: #ffdd57;
+      text-shadow: 0 0 20px #fff;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1000;
+      animation: fadeInOut 3s forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% {
         opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="mailbox" onclick="openLetter()">
-      <img src="https://img.icons8.com/ios/452/opened-mail.png" alt="ซองจดหมาย" width="100">
+  <!-- หน้า Lobby -->
+  <div id="lobby-page">
+    <h1>ของเรา</h1>
+    <div class="button-container">
+      <button onclick="showTime()">US</button>
+      <button onclick="showGameMenu()">Game</button>
     </div>
-    <div class="letter" id="letter">
-      <p>รักคุณมากๆ นะ!</p>
-    </div>
-    <div class="hearts" id="hearts"></div>
   </div>
 
+  <!-- หน้า Time Page -->
+  <div id="time-page" class="hidden">
+    <h1>18/09/2567 00:20</h1>
+    <div id="time-display"></div>
+    <div id="us-images">
+      <!-- Add PostImage URLs here -->
+      <img src="https://i.postimg.cc/2LxgVtC7/474065396-940708364865792-2954066811474455418-n.jpg" alt="Image 1" />
+      <img src="https://i.postimg.cc/5jqtBN0n/474124276-1148248433372470-7924536030536269495-n.jpg" alt="Image 2" />
+    </div>
+    <button class="back-button" onclick="backToLobby()">Back to Lobby</button>
+  </div>
+
+  <!-- หน้า Game Menu -->
+  <div id="game-menu" class="hidden">
+    <h1>เมนูเกม</h1>
+    <div class="button-container">
+      <button onclick="showGame1()">ทายเลข1-100</button>
+      <button onclick="window.location.href='https://www.example.com/game2'">Game 2</button>
+      <button onclick="window.location.href='https://www.example.com/game3'">Game 3</button>
+    </div>
+    <button class="back-button" onclick="backToLobby()">Back to Lobby</button>
+  </div>
+
+  <!-- หน้า Game 1 (ทายเลข1-100) -->
+  <div id="game1" class="hidden">
+    <h1>ทายเลข1-100</h1>
+    <p>กรอกหมายเลขระหว่าง 1 ถึง 100:</p>
+    <input type="number" id="guess" min="1" max="100" placeholder="ใส่ตัวเลขที่นี่" />
+    <br />
+    <button onclick="checkGuess()">ส่ง</button>
+    <p id="feedback"></p>
+    <button class="back-button" onclick="backToGameMenu()">กลับไปที่เมนูเกม</button>
+  </div>
+
+  <!-- Audio Elements สำหรับเสียงปุ่มกด, เพลงพื้นหลัง และเสียงแสดงความยินดี -->
+  <audio id="click-sound" src="click.mp3"></audio>
+  <audio id="bg-music" src="background.mp3" loop></audio>
+  <audio id="congrats-sound" src="congrats.mp3"></audio>
+
   <script>
-    // ฟังก์ชันแสดงจดหมาย
-    function openLetter() {
-      document.getElementById('letter').style.display = 'block';
-      createHearts(); // สร้างหัวใจขึ้นมา
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+    // ฟังก์ชันสร้างเอฟเฟค floating สำหรับหัวใจและดาว
+    function createFloatingElement(type) {
+      const element = document.createElement("div");
+      element.classList.add("floating", type);
+      element.style.left = Math.random() * 100 + "vw";
+      element.style.animationDelay = Math.random() * 5 + "s";
+      document.body.appendChild(element);
+      setTimeout(() => { element.remove(); }, 10000);
     }
 
-    // ฟังก์ชันสร้างหัวใจ
-    function createHearts() {
-      const heartsContainer = document.getElementById('hearts');
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.innerText = '❤️';
-      
-      // สุ่มตำแหน่งด้านขวา
-      const leftPosition = Math.random() * 100;
-      heart.style.left = `${leftPosition}%`;
+    setInterval(() => createFloatingElement("heart"), 1500);
+    setInterval(() => createFloatingElement("star"), 2000);
 
-      heartsContainer.appendChild(heart);
-
-      // ลบหัวใจเมื่อเอฟเฟกต์เสร็จ
-      setTimeout(() => {
-        heartsContainer.removeChild(heart);
-      }, 4000); // ใช้เวลา 4 วินาที
+    function showGameMenu() {
+      document.getElementById("lobby-page").classList.add("hidden");
+      document.getElementById("game-menu").classList.remove("hidden");
     }
 
-    // สร้างหัวใจอย่างต่อเนื่อง
-    setInterval(createHearts, 500);
+    function showGame1() {
+      document.getElementById("game-menu").classList.add("hidden");
+      document.getElementById("game1").classList.remove("hidden");
+      randomNumber = Math.floor(Math.random() * 100) + 1;
+      document.getElementById("feedback").innerHTML = "";
+      document.getElementById("guess").value = "";
+    }
+
+    function backToLobby() {
+      document.getElementById("game-menu").classList.add("hidden");
+      document.getElementById("time-page").classList.add("hidden");
+      document.getElementById("lobby-page").classList.remove("hidden");
+    }
+
+    function backToGameMenu() {
+      document.getElementById("game1").classList.add("hidden");
+      document.getElementById("game-menu").classList.remove("hidden");
+    }
+
+    function checkGuess() {
+      let guess = Number(document.getElementById("guess").value);
+      let feedback = document.getElementById("feedback");
+
+      if (guess < randomNumber) {
+        feedback.innerHTML = "ต่ำเกินไป! ลองอีกครั้ง";
+      } else if (guess > randomNumber) {
+        feedback.innerHTML = "สูงเกินไป! ลองอีกครั้ง";
+      } else {
+        feedback.innerHTML = "ยินดีด้วย! คุณทายถูกแล้ว!";
+        // เล่นเสียงแสดงความยินดี
+        document.getElementById("congrats-sound").play();
+        // สร้างเอฟเฟคแสดงความยินดี
+        let congrats = document.createElement("div");
+        congrats.classList.add("congrats");
+        congrats.innerHTML = "ยินดีด้วย!";
+        document.body.appendChild(congrats);
+        setTimeout(() => { congrats.remove(); }, 3000);
+      }
+    }
+
+    function showTime() {
+      document.getElementById("lobby-page").classList.add("hidden");
+      document.getElementById("time-page").classList.remove("hidden");
+
+      const startDate = new Date(2024, 8, 18, 0, 20, 0, 0);
+      const timeDisplay = document.getElementById("time-display");
+
+      function updateTime() {
+        const currentDate = new Date();
+        const timeDifference = currentDate - startDate;
+
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        timeDisplay.innerHTML = `${days} days : ${hours} hrs : ${minutes} mins : ${seconds} secs`;
+      }
+
+      setInterval(updateTime, 1000);
+    }
+
+    // เล่นเสียงปุ่มกดทุกครั้งที่มีการคลิกปุ่ม (และเริ่มเพลงพื้นหลังเมื่อมีการคลิกครั้งแรก)
+    window.addEventListener("load", function() {
+      const buttons = document.querySelectorAll("button");
+      buttons.forEach(function(btn) {
+        btn.addEventListener("click", function() {
+          document.getElementById("click-sound").play();
+        });
+      });
+      // เริ่มเพลงพื้นหลังเมื่อมีการคลิกครั้งแรก
+      document.body.addEventListener('click', function() {
+        let bgMusic = document.getElementById("bg-music");
+        if(bgMusic.paused) {
+          bgMusic.play();
+        }
+      }, { once: true });
+    });
   </script>
 </body>
 </html>
