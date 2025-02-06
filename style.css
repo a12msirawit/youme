@@ -1,55 +1,27 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #fbe8e7;
-  text-align: center;
-  padding: 50px;
-}
+// Get the button and heart effect element
+const surpriseButton = document.querySelector('.surprise-btn');
+const heartEffect = document.querySelector('.heart-effect');
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-}
+// Add event listener to button
+surpriseButton.addEventListener('click', function() {
+  // Create a heart effect on click
+  const heart = document.createElement('div');
+  heart.classList.add('heart-effect');
+  document.body.appendChild(heart);
 
-.header {
-  font-size: 3rem;
-  color: #e91e63;
-  margin-bottom: 20px;
-}
+  // Set a random position for the heart effect
+  const randomX = Math.random() * window.innerWidth;
+  const randomY = Math.random() * window.innerHeight;
+  heart.style.left = `${randomX}px`;
+  heart.style.top = `${randomY}px`;
 
-.surprise-btn {
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  background-color: #ff4081;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  // Remove the heart effect after animation
+  setTimeout(() => {
+    heart.remove();
+  }, 4000);
 
-.surprise-btn:hover {
-  background-color: #f50057;
-}
-
-.effect-box {
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background-color: rgba(255, 105, 180, 0.6);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.5);
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
+  // Display Valentine's message
+  setTimeout(() => {
+    alert("Happy Valentine's Day! 💖");
+  }, 500);
+});
