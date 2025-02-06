@@ -2,92 +2,95 @@
 body {
   font-family: 'Arial', sans-serif;
   background-color: #fff0f5;
-  color: white;
   text-align: center;
-  padding: 50px;
   margin: 0;
+  height: 100vh;
   overflow: hidden;
 }
 
-/* --- Hero Section --- */
-.hero {
+/* --- Container --- */
+.container {
   position: relative;
-  height: 100vh;
-  background: linear-gradient(45deg, #ff7eb9, #ff65a3, #ff4666);
-  background-size: 400% 400%;
-  animation: gradientAnimation 10s ease infinite;
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
+/* --- Heart (initial state) --- */
+.heart {
+  width: 150px;
+  height: 150px;
+  background-color: #ff3366;
+  position: relative;
+  transform: rotate(-45deg);
+  animation: heartbeat 1.5s infinite;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-color: #ff3366;
+  border-radius: 50%;
+}
+
+.heart::before {
+  left: 75px;
+  top: 0;
+}
+
+.heart::after {
+  top: 75px;
+  left: 0;
+}
+
+/* --- Animation of Heart (Heartbeat) --- */
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1) rotate(-45deg);
   }
   50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+    transform: scale(1.1) rotate(-45deg);
   }
 }
 
-/* --- Title --- */
-.title {
-  font-size: 4rem;
-  font-weight: bold;
-  margin-bottom: 30px;
-  text-transform: uppercase;
-  text-shadow: 3px 3px 10px rgba(255, 255, 255, 0.8);
-}
-
-/* --- Button Styling --- */
-.surprise-btn {
-  padding: 20px 40px;
-  font-size: 1.5rem;
-  background-color: #ff4081;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  outline: none;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.surprise-btn:hover {
-  background-color: #f50057;
-  transform: scale(1.1);
-}
-
-/* --- Heart Effect --- */
-.heart-effect {
-  position: absolute;
+/* --- Rose (initially hidden) --- */
+.rose {
   width: 0;
   height: 0;
-  border-radius: 50%;
-  background-color: rgba(255, 20, 147, 0.5);
-  animation: heartAnimation 4s infinite ease;
+  background-image: url('https://cdn.pixabay.com/photo/2017/08/30/06/44/rose-2691886_960_720.png');
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  display: none;
+  transition: all 0.5s ease;
 }
 
-@keyframes heartAnimation {
+/* --- Heart particles (effects when clicked) --- */
+.heart-particle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #ff3366;
+  border-radius: 50%;
+  animation: particleAnimation 1s ease-out forwards;
+}
+
+@keyframes particleAnimation {
   0% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: scale(1);
     opacity: 1;
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.5);
-    opacity: 0.6;
-  }
   100% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: scale(0);
     opacity: 0;
   }
-}
-
-/* --- Pulse Effect on Button --- */
-.surprise-btn:active {
-  transform: scale(0.9);
 }
