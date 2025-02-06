@@ -1,96 +1,94 @@
 /* --- General Styles --- */
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #fff0f5;
-  text-align: center;
-  margin: 0;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* --- Container --- */
-.container {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  background-color: #ffebf2;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
 }
 
-/* --- Heart (initial state) --- */
-.heart {
-  width: 150px;
-  height: 150px;
+.envelope {
+  width: 300px;
+  height: 200px;
   background-color: #ff3366;
   position: relative;
-  transform: rotate(-45deg);
-  animation: heartbeat 1.5s infinite;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  transform: scale(1);
+  transition: transform 0.3s ease;
+  z-index: 1;
 }
 
-.heart::before,
-.heart::after {
-  content: "";
+/* Envelope Flap */
+.envelope-flap {
+  width: 100%;
+  height: 70px;
+  background-color: #ff5a8f;
   position: absolute;
-  width: 150px;
-  height: 150px;
-  background-color: #ff3366;
-  border-radius: 50%;
-}
-
-.heart::before {
-  left: 75px;
   top: 0;
-}
-
-.heart::after {
-  top: 75px;
   left: 0;
+  border-radius: 15px 15px 0 0;
+  transform-origin: top center;
+  transition: transform 0.5s ease;
 }
 
-/* --- Animation of Heart (Heartbeat) --- */
-@keyframes heartbeat {
-  0%, 100% {
-    transform: scale(1) rotate(-45deg);
-  }
-  50% {
-    transform: scale(1.1) rotate(-45deg);
-  }
-}
-
-/* --- Rose (initially hidden) --- */
-.rose {
-  width: 0;
-  height: 0;
-  background-image: url('https://cdn.pixabay.com/photo/2017/08/30/06/44/rose-2691886_960_720.png');
-  background-size: cover;
-  background-position: center;
+/* Envelope Body */
+.envelope-body {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
   position: absolute;
-  display: none;
-  transition: all 0.5s ease;
+  top: 0;
+  left: 0;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transform: scale(0);
+  transition: transform 0.5s ease;
 }
 
-/* --- Heart particles (effects when clicked) --- */
-.heart-particle {
+/* Message Styles */
+.message {
+  padding: 30px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #ff3366;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* --- Particle Effects --- */
+@keyframes glitter {
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.5); }
+}
+
+.particle {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: #ff3366;
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255, 105, 180, 0.8);
   border-radius: 50%;
-  animation: particleAnimation 1s ease-out forwards;
+  animation: glitter 1.5s ease-out infinite;
 }
 
-@keyframes particleAnimation {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0);
-    opacity: 0;
-  }
+/* --- Effects on Click --- */
+.envelope.opened .envelope-flap {
+  transform: rotateX(180deg);
+}
+
+.envelope.opened .envelope-body {
+  transform: scale(1);
+}
+
+.envelope.opened .message {
+  opacity: 1;
+  transform: translateY(0);
 }
