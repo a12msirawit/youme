@@ -1,27 +1,42 @@
-// Get the button and heart effect element
-const surpriseButton = document.querySelector('.surprise-btn');
-const heartEffect = document.querySelector('.heart-effect');
+// Get the heart element and rose element
+const heart = document.getElementById('heart');
+const rose = document.getElementById('rose');
 
-// Add event listener to button
-surpriseButton.addEventListener('click', function() {
-  // Create a heart effect on click
-  const heart = document.createElement('div');
-  heart.classList.add('heart-effect');
-  document.body.appendChild(heart);
+// Function to create heart particles
+function createHeartParticles(event) {
+  const particlesCount = 20; // Number of particles (hearts) to create
 
-  // Set a random position for the heart effect
-  const randomX = Math.random() * window.innerWidth;
-  const randomY = Math.random() * window.innerHeight;
-  heart.style.left = `${randomX}px`;
-  heart.style.top = `${randomY}px`;
+  for (let i = 0; i < particlesCount; i++) {
+    const heartParticle = document.createElement('div');
+    heartParticle.classList.add('heart-particle');
 
-  // Remove the heart effect after animation
+    // Randomize position and movement
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 200 - 100;
+    heartParticle.style.left = `${event.clientX + x}px`;
+    heartParticle.style.top = `${event.clientY + y}px`;
+
+    document.body.appendChild(heartParticle);
+
+    // Remove the particle after animation ends
+    setTimeout(() => {
+      heartParticle.remove();
+    }, 1000);
+  }
+}
+
+// Function to handle heart click and show rose
+heart.addEventListener('click', function(event) {
+  // Create heart particles effect
+  createHeartParticles(event);
+
+  // Hide the heart and show the rose after 1 second
   setTimeout(() => {
-    heart.remove();
-  }, 4000);
-
-  // Display Valentine's message
-  setTimeout(() => {
-    alert("Happy Valentine's Day! 💖");
-  }, 500);
+    heart.style.display = 'none';
+    rose.style.display = 'block';
+    rose.style.width = '100px';
+    rose.style.height = '100px';
+    rose.style.left = `${event.clientX - 50}px`;
+    rose.style.top = `${event.clientY - 50}px`;
+  }, 1000);
 });
