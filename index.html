@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lobby Page</title>
   <style>
+    /* Global Styles */
     body {
       font-family: 'Arial', sans-serif;
       background: linear-gradient(135deg, #ff6a00, #ee0979);
@@ -18,20 +19,28 @@
       position: relative;
       overflow: hidden;
     }
-
     h1 {
       color: #fff;
       font-size: 3em;
       font-weight: 600;
       text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
     }
-
     p {
       color: #fff;
       font-size: 1.2em;
     }
-
-    .button-container button {
+    input[type="text"],
+    input[type="password"],
+    input[type="number"] {
+      font-size: 1.2em;
+      padding: 10px;
+      width: 80%;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .button-container button, button {
       font-size: 1.4em;
       padding: 15px 30px;
       border-radius: 50px;
@@ -46,26 +55,44 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-
-    .button-container button:hover {
+    button:hover {
       background: linear-gradient(135deg, #ff6b00, #ff3c00);
       transform: scale(1.1);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
-
     .hidden {
       display: none;
     }
-
-    /* Styling for the time display text */
+    /* Top right user controls (Register / Login / Logout) */
+    #user-controls {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
+    #user-controls button {
+      font-size: 0.9em;
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-left: 5px;
+      background: linear-gradient(135deg, #ff3c00, #ff6b00);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    }
+    #user-controls button:hover {
+      background: linear-gradient(135deg, #ff6b00, #ff3c00);
+      transform: scale(1.05);
+    }
+    /* Time Page */
     #time-display {
       font-size: 2em;
       color: #fff;
       font-family: 'Courier New', Courier, monospace;
       margin-top: 20px;
     }
-
-    /* Positioning the back button in the time page and game pages */
+    /* Back Button */
     .back-button {
       background: #ff7597;
       color: #fff;
@@ -77,12 +104,10 @@
       transition: background 0.3s ease;
       margin-top: 20px;
     }
-
     .back-button:hover {
       background: #ff91a4;
     }
-
-    /* Styling for the images */
+    /* Images */
     #us-images img {
       margin-top: 20px;
       width: 150px;
@@ -91,15 +116,12 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
-
-    /* Floating hearts and stars animation */
+    /* Floating Animation */
     .floating {
       position: absolute;
       animation: float 10s infinite;
       pointer-events: none;
     }
-
-    /* ปรับแต่งหัวใจให้ดูสมจริงและมีเงา */
     .heart {
       width: 30px;
       height: 30px;
@@ -110,8 +132,6 @@
       opacity: 0.9;
       filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.6));
     }
-
-    /* ปรับแต่งดาวให้ดูสมจริงและมีเงา */
     .star {
       width: 30px;
       height: 30px;
@@ -122,23 +142,12 @@
       opacity: 0.95;
       filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.6));
     }
-
     @keyframes float {
-      0% {
-        transform: translateY(0) rotate(0deg) scale(0.8);
-        opacity: 1;
-      }
-      50% {
-        transform: translateY(-100vh) rotate(360deg) scale(1.2);
-        opacity: 0.5;
-      }
-      100% {
-        transform: translateY(0) rotate(720deg) scale(0.8);
-        opacity: 1;
-      }
+      0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 1; }
+      50% { transform: translateY(-100vh) rotate(360deg) scale(1.2); opacity: 0.5; }
+      100% { transform: translateY(0) rotate(720deg) scale(0.8); opacity: 1; }
     }
-
-    /* ==================== Styling สำหรับหน้าเกม 1 (ทายเลข1-100) ==================== */
+    /* ==================== หน้า Game 1 (ทายเลข 1-100) ==================== */
     #game1 {
       background: rgba(0, 0, 0, 0.4);
       border-radius: 20px;
@@ -148,56 +157,95 @@
       width: 400px;
       margin: 20px;
     }
-
     #game1 h1 {
       font-size: 2.5em;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       color: #ffedcc;
       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
     }
-
+    #current-user {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: #fff;
+    }
     #game1 p {
       font-size: 1.2em;
       margin-bottom: 20px;
       color: #fff;
     }
-
-    #game1 input[type="number"] {
-      font-size: 1.2em;
-      padding: 10px;
-      width: 80%;
-      border: none;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      text-align: center;
+    /* ==================== หน้า Register & Login ==================== */
+    #register-page, #login-page {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      max-width: 90%;
+      width: 400px;
+      margin: 20px;
     }
-
-    /* เปลี่ยนสีปุ่มในเกมเป็นชมพูแดง */
-    #game1 button {
-      font-size: 1.2em;
+    #register-page h1, #login-page h1 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+    }
+    .error {
+      color: red;
+      font-size: 1em;
+      margin-top: 5px;
+    }
+    /* ==================== หน้า Leaderboard (ในล็อบบี้) ==================== */
+    #leaderboard-page {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      max-width: 90%;
+      width: 600px;
+      margin: 20px;
+    }
+    #leaderboard-page h1 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+    }
+    #leaderboard-table-full {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    #leaderboard-table-full th,
+    #leaderboard-table-full td {
+      padding: 12px 15px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+    #leaderboard-table-full th {
+      background: linear-gradient(135deg, #ff3366, #ff5e7d);
+      color: #fff;
+    }
+    #leaderboard-tabs-full {
+      margin-bottom: 20px;
+    }
+    .tab-button {
+      font-size: 1em;
       padding: 10px 20px;
       border: none;
       border-radius: 10px;
-      background: linear-gradient(135deg, #ff3366, #ff5e7d);
-      color: #fff;
+      background: #ddd;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      margin: 0 5px;
+      transition: background 0.3s;
     }
-
-    #game1 button:hover {
-      background: linear-gradient(135deg, #ff5e7d, #ff3366);
-      transform: scale(1.05);
-    }
-
-    #game1 #feedback {
-      font-size: 1.1em;
-      margin-top: 15px;
+    .tab-button.active, .tab-button:hover {
+      background: #ff5e7d;
       color: #fff;
-      min-height: 1.5em;
     }
-
-    /* ==================== เอฟเฟคแสดงความยินดี ==================== */
+    /* เอฟเฟคแสดงความยินดี */
     .congrats {
       position: fixed;
       top: 50%;
@@ -211,30 +259,24 @@
       z-index: 1000;
       animation: fadeInOut 3s forwards;
     }
-
     @keyframes fadeInOut {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
-      }
-      50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
-      }
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
     }
   </style>
 </head>
 <body>
+  <!-- Top Right User Controls -->
+  <div id="user-controls"></div>
+
   <!-- หน้า Lobby -->
   <div id="lobby-page">
     <h1>ของเรา</h1>
     <div class="button-container">
       <button onclick="showTime()">US</button>
       <button onclick="showGameMenu()">Game</button>
+      <button onclick="showLeaderboard()">Leaderboard</button>
     </div>
   </div>
 
@@ -243,7 +285,6 @@
     <h1>18/09/2567 00:20</h1>
     <div id="time-display"></div>
     <div id="us-images">
-      <!-- Add PostImage URLs here -->
       <img src="https://i.postimg.cc/2LxgVtC7/474065396-940708364865792-2954066811474455418-n.jpg" alt="Image 1" />
       <img src="https://i.postimg.cc/5jqtBN0n/474124276-1148248433372470-7924536030536269495-n.jpg" alt="Image 2" />
     </div>
@@ -254,33 +295,107 @@
   <div id="game-menu" class="hidden">
     <h1>เมนูเกม</h1>
     <div class="button-container">
-      <button onclick="showGame1()">ทายเลข1-100</button>
+      <button onclick="showGame1()">ทายเลข 1-100</button>
       <button onclick="window.location.href='https://www.example.com/game2'">Game 2</button>
       <button onclick="window.location.href='https://www.example.com/game3'">Game 3</button>
     </div>
     <button class="back-button" onclick="backToLobby()">Back to Lobby</button>
   </div>
 
-  <!-- หน้า Game 1 (ทายเลข1-100) -->
+  <!-- หน้า Game 1 (ทายเลข 1-100) -->
   <div id="game1" class="hidden">
-    <h1>ทายเลข1-100</h1>
+    <h1>ทายเลข 1-100</h1>
+    <p id="current-user"></p>
     <p>กรอกหมายเลขระหว่าง 1 ถึง 100:</p>
-    <input type="number" id="guess" min="1" max="100" placeholder="ใส่ตัวเลขที่นี่" />
-    <br />
-    <button onclick="checkGuess()">ส่ง</button>
-    <p id="feedback"></p>
+    <button id="startGameBtn" onclick="startGame()">เริ่มเกม</button>
+    <div id="play-area" class="hidden">
+      <input type="number" id="guess" min="1" max="100" placeholder="ใส่ตัวเลขที่นี่" />
+      <br />
+      <button onclick="checkGuess()">ส่ง</button>
+      <p id="feedback"></p>
+      <p id="live-stats"></p>
+      <p id="result"></p>
+    </div>
     <button class="back-button" onclick="backToGameMenu()">กลับไปที่เมนูเกม</button>
   </div>
 
-  <!-- Audio Elements สำหรับเสียงปุ่มกด, เพลงพื้นหลัง และเสียงแสดงความยินดี -->
+  <!-- หน้า Register -->
+  <div id="register-page" class="hidden">
+    <h1>Register</h1>
+    <input type="text" id="reg-username" placeholder="Username" />
+    <br />
+    <input type="password" id="reg-password" placeholder="Password (6 characters)" maxlength="6" />
+    <br />
+    <button onclick="registerUser()">Register</button>
+    <p id="reg-error" class="error"></p>
+    <button class="back-button" onclick="backToLobby()">Back to Lobby</button>
+  </div>
+
+  <!-- หน้า Login -->
+  <div id="login-page" class="hidden">
+    <h1>Login</h1>
+    <input type="text" id="login-username" placeholder="Username" />
+    <br />
+    <input type="password" id="login-password" placeholder="Password" maxlength="6" />
+    <br />
+    <button onclick="loginUser()">Login</button>
+    <p id="login-error" class="error"></p>
+    <button class="back-button" onclick="backToLobby()">Back to Lobby</button>
+  </div>
+
+  <!-- หน้า Leaderboard (แบบเต็มในล็อบบี้) -->
+  <div id="leaderboard-page" class="hidden">
+    <h1>Leaderboard</h1>
+    <!-- Tab Menu สำหรับ Leaderboard (Game 1, Game 2, Game 3) -->
+    <div id="leaderboard-tabs-full">
+      <button class="tab-button active" id="tab-full-game1" onclick="showLeaderboardTabFull('game1')">Game 1</button>
+      <button class="tab-button" id="tab-full-game2" onclick="showLeaderboardTabFull('game2')">Game 2</button>
+      <button class="tab-button" id="tab-full-game3" onclick="showLeaderboardTabFull('game3')">Game 3</button>
+    </div>
+    <table id="leaderboard-table-full">
+      <thead>
+        <tr>
+          <th>อันดับ</th>
+          <th>ชื่อผู้เล่น</th>
+          <th>เวลา (วินาที)</th>
+          <th>รอบ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- แถวจะถูกอัปเดตโดย JavaScript -->
+      </tbody>
+    </table>
+    <button class="back-button" onclick="backToLobby()">Back to Lobby</button>
+  </div>
+
+  <!-- Audio Elements -->
   <audio id="click-sound" src="click.mp3"></audio>
   <audio id="bg-music" src="background.mp3" loop></audio>
   <audio id="congrats-sound" src="congrats.mp3"></audio>
 
   <script>
-    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    /* ------------------ Leaderboard Data ------------------ */
+    function loadLeaderboardData() {
+      let data = localStorage.getItem("leaderboardData");
+      if (data) {
+        return JSON.parse(data);
+      } else {
+        return { game1: [], game2: [], game3: [] };
+      }
+    }
+    function saveLeaderboardData(data) {
+      localStorage.setItem("leaderboardData", JSON.stringify(data));
+    }
+    let leaderboardData = loadLeaderboardData();
 
-    // ฟังก์ชันสร้างเอฟเฟค floating สำหรับหัวใจและดาว
+    /* ------------------ Global Variables ------------------ */
+    let currentPlayerName = "";
+    let randomNumber;
+    let startTime;
+    let roundCount;
+    let gameInterval;
+
+    /* ------------------ Floating Effects ------------------ */
     function createFloatingElement(type) {
       const element = document.createElement("div");
       element.classList.add("floating", type);
@@ -289,47 +404,194 @@
       document.body.appendChild(element);
       setTimeout(() => { element.remove(); }, 10000);
     }
-
     setInterval(() => createFloatingElement("heart"), 1500);
     setInterval(() => createFloatingElement("star"), 2000);
 
-    function showGameMenu() {
-      document.getElementById("lobby-page").classList.add("hidden");
-      document.getElementById("game-menu").classList.remove("hidden");
+    /* ------------------ Page Navigation ------------------ */
+    function hideAllPages() {
+      const pages = document.querySelectorAll("#lobby-page, #time-page, #game-menu, #game1, #register-page, #login-page, #leaderboard-page");
+      pages.forEach(page => page.classList.add("hidden"));
     }
-
-    function showGame1() {
-      document.getElementById("game-menu").classList.add("hidden");
-      document.getElementById("game1").classList.remove("hidden");
-      randomNumber = Math.floor(Math.random() * 100) + 1;
-      document.getElementById("feedback").innerHTML = "";
-      document.getElementById("guess").value = "";
-    }
-
     function backToLobby() {
-      document.getElementById("game-menu").classList.add("hidden");
-      document.getElementById("time-page").classList.add("hidden");
+      hideAllPages();
       document.getElementById("lobby-page").classList.remove("hidden");
+      updateUserControls();
     }
-
     function backToGameMenu() {
-      document.getElementById("game1").classList.add("hidden");
+      hideAllPages();
       document.getElementById("game-menu").classList.remove("hidden");
     }
+    function showTime() {
+      hideAllPages();
+      document.getElementById("time-page").classList.remove("hidden");
+      const startDate = new Date(2024, 8, 18, 0, 20, 0, 0);
+      const timeDisplay = document.getElementById("time-display");
+      function updateTime() {
+        const currentDate = new Date();
+        const timeDifference = currentDate - startDate;
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+        timeDisplay.innerHTML = `${days} days : ${hours} hrs : ${minutes} mins : ${seconds} secs`;
+      }
+      setInterval(updateTime, 1000);
+    }
+    function showGameMenu() {
+      hideAllPages();
+      document.getElementById("game-menu").classList.remove("hidden");
+    }
+    function showLeaderboard() {
+      hideAllPages();
+      showLeaderboardTabFull('game1');
+      document.getElementById("leaderboard-page").classList.remove("hidden");
+    }
+    function showRegister() {
+      hideAllPages();
+      document.getElementById("register-page").classList.remove("hidden");
+    }
+    function showLogin() {
+      hideAllPages();
+      document.getElementById("login-page").classList.remove("hidden");
+    }
+    // หน้า Game 1: ตรวจสอบว่าผู้ใช้ล็อกอินหรือไม่
+    function showGame1() {
+      if (!currentPlayerName) {
+        alert("กรุณาเข้าสู่ระบบก่อนเล่น");
+        showLogin();
+        return;
+      }
+      hideAllPages();
+      document.getElementById("game1").classList.remove("hidden");
+      document.getElementById("current-user").textContent = "ผู้เล่น: " + currentPlayerName;
+      document.getElementById("startGameBtn").classList.remove("hidden");
+      document.getElementById("feedback").innerHTML = "";
+      document.getElementById("live-stats").innerHTML = "";
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("guess").value = "";
+      if (gameInterval) clearInterval(gameInterval);
+    }
 
+    /* ------------------ User Controls (Top Right) ------------------ */
+    function updateUserControls() {
+      const container = document.getElementById("user-controls");
+      if (currentPlayerName) {
+        container.innerHTML = `<span style="font-size:0.9em; color:#fff;">${currentPlayerName}</span>
+                               <button onclick="logoutUser()">Logout</button>`;
+      } else {
+        container.innerHTML = `<button onclick="showRegister()">Register</button>
+                               <button onclick="showLogin()">Login</button>`;
+      }
+    }
+    function logoutUser() {
+      currentPlayerName = "";
+      updateUserControls();
+      alert("ออกจากระบบเรียบร้อยแล้ว");
+      showLobby();
+    }
+    function showLobby() {
+      hideAllPages();
+      document.getElementById("lobby-page").classList.remove("hidden");
+      updateUserControls();
+    }
+
+    /* ------------------ Register & Login Functions ------------------ */
+    function registerUser() {
+      let username = document.getElementById("reg-username").value.trim();
+      let password = document.getElementById("reg-password").value;
+      let regError = document.getElementById("reg-error");
+      if (username === "" || password === "") {
+        regError.textContent = "กรุณากรอกข้อมูลให้ครบ";
+        return;
+      }
+      if (password.length !== 6) {
+        regError.textContent = "รหัสผ่านต้องมี 6 ตัวอักษร";
+        return;
+      }
+      let users = localStorage.getItem("users");
+      if (users) {
+        users = JSON.parse(users);
+      } else {
+        users = [];
+      }
+      let exists = users.some(u => u.username.toLowerCase() === username.toLowerCase());
+      if (exists) {
+        regError.textContent = "Username นี้ถูกใช้แล้ว";
+        return;
+      }
+      users.push({ username: username, password: password });
+      localStorage.setItem("users", JSON.stringify(users));
+      regError.style.color = "green";
+      regError.textContent = "สมัครสมาชิกเรียบร้อยแล้ว กรุณาเข้าสู่ระบบ";
+      setTimeout(() => {
+        showLogin();
+      }, 1500);
+    }
+    function loginUser() {
+      let username = document.getElementById("login-username").value.trim();
+      let password = document.getElementById("login-password").value;
+      let loginError = document.getElementById("login-error");
+      if (username === "" || password === "") {
+        loginError.textContent = "กรุณากรอกข้อมูลให้ครบ";
+        return;
+      }
+      let users = localStorage.getItem("users");
+      if (users) {
+        users = JSON.parse(users);
+      } else {
+        loginError.textContent = "ไม่มีผู้ใช้ กรุณาสมัครสมาชิกก่อน";
+        return;
+      }
+      let user = users.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
+      if (!user) {
+        loginError.textContent = "ข้อมูลไม่ถูกต้อง";
+        return;
+      }
+      currentPlayerName = user.username;
+      loginError.style.color = "green";
+      loginError.textContent = "เข้าสู่ระบบสำเร็จ";
+      updateUserControls();
+      setTimeout(() => {
+        showGameMenu();
+      }, 1500);
+    }
+
+    /* ------------------ Game 1 Functions ------------------ */
+    function startGame() {
+      document.getElementById("startGameBtn").classList.add("hidden");
+      document.getElementById("play-area").classList.remove("hidden");
+      randomNumber = Math.floor(Math.random() * 100) + 1;
+      startTime = new Date();
+      roundCount = 0;
+      document.getElementById("feedback").innerHTML = "";
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("guess").value = "";
+      document.getElementById("live-stats").innerHTML = "เวลา: 0 วินาที, รอบ: 0";
+      if (gameInterval) clearInterval(gameInterval);
+      gameInterval = setInterval(updateLiveStats, 1000);
+    }
+    function updateLiveStats() {
+      let currentTime = new Date();
+      let secondsElapsed = Math.floor((currentTime - startTime) / 1000);
+      document.getElementById("live-stats").innerHTML = `เวลา: ${secondsElapsed} วินาที, รอบ: ${roundCount}`;
+    }
     function checkGuess() {
       let guess = Number(document.getElementById("guess").value);
       let feedback = document.getElementById("feedback");
-
+      roundCount++;
       if (guess < randomNumber) {
         feedback.innerHTML = "ต่ำเกินไป! ลองอีกครั้ง";
       } else if (guess > randomNumber) {
         feedback.innerHTML = "สูงเกินไป! ลองอีกครั้ง";
       } else {
         feedback.innerHTML = "ยินดีด้วย! คุณทายถูกแล้ว!";
-        // เล่นเสียงแสดงความยินดี
+        clearInterval(gameInterval);
+        let endTime = new Date();
+        let timeTaken = Math.floor((endTime - startTime) / 1000);
+        document.getElementById("result").innerHTML = `ใช้เวลา ${timeTaken} วินาที ในการทาย ${roundCount} รอบ`;
+        leaderboardData.game1.push({ name: currentPlayerName, time: timeTaken, rounds: roundCount });
+        saveLeaderboardData(leaderboardData);
         document.getElementById("congrats-sound").play();
-        // สร้างเอฟเฟคแสดงความยินดี
         let congrats = document.createElement("div");
         congrats.classList.add("congrats");
         congrats.innerHTML = "ยินดีด้วย!";
@@ -338,44 +600,36 @@
       }
     }
 
-    function showTime() {
-      document.getElementById("lobby-page").classList.add("hidden");
-      document.getElementById("time-page").classList.remove("hidden");
-
-      const startDate = new Date(2024, 8, 18, 0, 20, 0, 0);
-      const timeDisplay = document.getElementById("time-display");
-
-      function updateTime() {
-        const currentDate = new Date();
-        const timeDifference = currentDate - startDate;
-
-        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-        timeDisplay.innerHTML = `${days} days : ${hours} hrs : ${minutes} mins : ${seconds} secs`;
-      }
-
-      setInterval(updateTime, 1000);
+    /* ------------------ Leaderboard Tab (Full) Functions ------------------ */
+    function showLeaderboardTabFull(game) {
+      document.querySelectorAll("#leaderboard-tabs-full .tab-button").forEach(btn => btn.classList.remove("active"));
+      document.getElementById("tab-full-" + game).classList.add("active");
+      updateLeaderboardTableFull(game);
+    }
+    function updateLeaderboardTableFull(game) {
+      leaderboardData = loadLeaderboardData();
+      const tbody = document.querySelector("#leaderboard-table-full tbody");
+      tbody.innerHTML = "";
+      (leaderboardData[game] || []).forEach((entry, index) => {
+        const row = document.createElement("tr");
+        const rankCell = document.createElement("td");
+        rankCell.textContent = index + 1;
+        const nameCell = document.createElement("td");
+        nameCell.textContent = entry.name;
+        const timeCell = document.createElement("td");
+        timeCell.textContent = entry.time;
+        const roundCell = document.createElement("td");
+        roundCell.textContent = entry.rounds;
+        row.appendChild(rankCell);
+        row.appendChild(nameCell);
+        row.appendChild(timeCell);
+        row.appendChild(roundCell);
+        tbody.appendChild(row);
+      });
     }
 
-    // เล่นเสียงปุ่มกดทุกครั้งที่มีการคลิกปุ่ม (และเริ่มเพลงพื้นหลังเมื่อมีการคลิกครั้งแรก)
-    window.addEventListener("load", function() {
-      const buttons = document.querySelectorAll("button");
-      buttons.forEach(function(btn) {
-        btn.addEventListener("click", function() {
-          document.getElementById("click-sound").play();
-        });
-      });
-      // เริ่มเพลงพื้นหลังเมื่อมีการคลิกครั้งแรก
-      document.body.addEventListener('click', function() {
-        let bgMusic = document.getElementById("bg-music");
-        if(bgMusic.paused) {
-          bgMusic.play();
-        }
-      }, { once: true });
-    });
+    /* ------------------ Initial Setup ------------------ */
+    updateUserControls();
   </script>
 </body>
 </html>
