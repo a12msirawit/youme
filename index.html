@@ -394,6 +394,10 @@
     let startTime;
     let roundCount;
     let gameInterval;
+    // ตัวแปรสำหรับรีเฟรช Leaderboard อัตโนมัติ
+    let leaderboardInterval = null;
+    // เก็บเกมที่กำลังแสดงใน Leaderboard (default เป็น game1)
+    let currentLeaderboardGame = 'game1';
 
     /* ------------------ Floating Effects ------------------ */
     function createFloatingElement(type) {
@@ -409,6 +413,11 @@
 
     /* ------------------ Page Navigation ------------------ */
     function hideAllPages() {
+      // ถ้ามี Leaderboard Interval กำลังทำงานอยู่ ให้หยุดก่อน
+      if (leaderboardInterval !== null) {
+        clearInterval(leaderboardInterval);
+        leaderboardInterval = null;
+      }
       const pages = document.querySelectorAll("#lobby-page, #time-page, #game-menu, #game1, #register-page, #login-page, #leaderboard-page");
       pages.forEach(page => page.classList.add("hidden"));
     }
@@ -443,8 +452,13 @@
     }
     function showLeaderboard() {
       hideAllPages();
+      // เริ่มต้นแสดง Tab ของ Game 1 เป็นค่า default
       showLeaderboardTabFull('game1');
       document.getElementById("leaderboard-page").classList.remove("hidden");
+      // เริ่มรีเฟรชตาราง Leaderboard ทุก 2 วินาที
+      leaderboardInterval = setInterval(() => {
+        updateLeaderboardTableFull(currentLeaderboardGame);
+      }, 2000);
     }
     function showRegister() {
       hideAllPages();
@@ -602,6 +616,8 @@
 
     /* ------------------ Leaderboard Tab (Full) Functions ------------------ */
     function showLeaderboardTabFull(game) {
+      // อัปเดตตัวแปรเก็บเกมที่ใช้งานอยู่
+      currentLeaderboardGame = game;
       document.querySelectorAll("#leaderboard-tabs-full .tab-button").forEach(btn => btn.classList.remove("active"));
       document.getElementById("tab-full-" + game).classList.add("active");
       updateLeaderboardTableFull(game);
